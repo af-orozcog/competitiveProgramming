@@ -1,0 +1,9 @@
+#include<iostream>
+#define ll long long
+#define min(x,y)(x < y? x:y)
+
+using namespace std;
+
+int main(){
+	
+}
