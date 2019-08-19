@@ -1,0 +1,6 @@
+#include<iostream>
+#include<cstring>
+
+using namespaces std;
+
+int dp[10000][100];

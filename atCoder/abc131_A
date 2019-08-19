@@ -1,0 +1,9 @@
+#include<stdio.h>
+
+int main(){
+	char toRead[5];
+	scanf("%s",&toRead);
+	for(int i = 0; i < 3;++i){
+	
+	}
+}
