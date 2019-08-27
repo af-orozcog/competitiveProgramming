@@ -26,7 +26,7 @@ void sett(){
 	}
 }
 
-int solve(int k,int p,int n){
+ll solve(int k,int p,int n){
 	if(n == 0 && k == 0)
 		return 1;
 	if(k == 0)
