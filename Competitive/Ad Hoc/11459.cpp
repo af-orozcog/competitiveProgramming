@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<map>
 
 using namespace std;
 
@@ -14,22 +15,23 @@ int main(){
 		for(int i = 0; i < b;++i){
 			int from,too;
 			scanf(" %d %d",&from,&too);
-			to[from] = to;
+			to[from] = too;
 		}
 		int turn = 1;
 		bool moves = true;
 		while(c--){
-			if(!moves)
-				continue;
+			//cout << c << endl;
 			int mo;
 			scanf(" %d",&mo);
+			if(!moves)
+				continue;
 			players[turn] += mo;
-			if(mo >= 100){
+			if(to.count(players[turn]))
+				players[turn] = to[players[turn]];
+			if(players[turn] >= 100){
 				moves = false;
 				players[turn] = 100;
 			}
-			if(to.count(players[turn]))
-				players[turn] = to[players[turn]];
 			turn++;
 			if(turn > a)
 				turn = 1; 

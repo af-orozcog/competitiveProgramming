@@ -7,15 +7,22 @@ int main(){
 	while(t--){
 		int b,p,f,h,c;
 		scanf(" %d %d %d %d %d",&b,&p,&f,&h,&c);
-		int div = b >> 1;
 		int ans = 0;
+		int use = b >> 1;
 		if(h > c){
-			ans += min(div,p)*h;
-			ans +=min((b-min(div,p))>>1,f -min(div,p))*c;
+			ans += min(use,p)*h;
+			use -= min(use,p);
+			ans += min(use,f)*c;
+		}
+		else if(c > h){
+			ans += min(use,f)*c;
+			use -= min(use,f);
+			ans += min(use,p)*h;
 		}
 		else{
-			ans += min(div,f)*c;
-			ans +=min((b-min(div,f))>>1,p -min(div,f))*c;
+			ans += min(use,p)*h;
+			use -= min(use,p);
+			ans += min(use,f)*c;
 		}
 		printf("%d\n",ans);
 	}
