@@ -4,39 +4,32 @@
 #include<iostream>
 #include<cstring>
 #define ll long long
+#include<vector>
 
 using namespace std;
 
-ll memo[5000][5000];
 ll M = 1000000007;
-int N;
-char stats[5000];
-
-ll solve(int toTake,int identa){
-	if(toTake == N)
-		return 1;
-	if(toTake > N)
-		return 0;
-	if(memo[toTake][identa] != -1)
-		return memo[toTake][identa];
-	ll add = 0;
-	if(stats[toTake] == 'f'){
-		return memo[toTake][identa] = solve(toTake+2,identa + 1)+1 % M;
-	}
-	ll ans = 0;
-	for(int i = 0; i <= identa;++i){
-		cout << toTake<< " " << identa << endl;
-		ans += solve(toTake+1,i)%M;
-	}
-	return memo[toTake][identa] = ans;
-}
 
 int main(){
+	int N;
 	scanf(" %d",&N);
-	memset(memo,-1,sizeof(memo));
+	char stats[N];
+	//memset(memo,-1,sizeof(memo));
 	for(int i = 0; i < N;++i){
 		scanf(" %c",&stats[i]);
 	}
-	cout << solve(0,0) << endl;
+	ll dp[N];
+	memset(dp,0,sizeof(dp));
+	dp[0] = 1;
+	int indent = 0;
+	for(int i = 0;i < N;++i){
+		if(stats[i] == 'f') ++indent;
+		else{
+			for(int j = 1; j <= indent;++j){
+				dp[j] = (dp[j-1]+dp[j]) %M;
+			}
+		}
+	}
+	cout << dp[indent] << endl;
 	return 0;
 }

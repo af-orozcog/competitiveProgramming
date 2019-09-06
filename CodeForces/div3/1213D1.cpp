@@ -1,0 +1,61 @@
+#include <iostream>
+#include<vector>
+#include <algorithm>
+#include <map>
+#define min(x,y)( x<y?x:y)
+#define ll long long
+
+using namespace std;
+typedef pair<int,int> pii;
+
+int main(){
+    int n,k;
+    scanf(" %d %d",&n,&k);
+    vector<int> nums(n);
+    for(int i = 0; i < n; ++i)
+        scanf(" %d", &nums[i]);
+    sort(nums.begin(),nums.end());
+    map<int,int> freq;
+    map<int,ll> cost;
+    bool wh = false;
+    for(int i = 0; i < n; ++i){
+        if(freq.count(nums[i])> 0)
+            ++freq[nums[i]];
+        else
+            freq[nums[i]] = 1;
+        if(freq[nums[i]] >= k)
+            wh = true;
+    }
+    if(wh){
+        puts("0");
+        return 0;
+    }
+    ll costa = 1000000000000;
+    for(int i = 0; i < n;++i){
+        int j = 1;
+        int val = nums[i];
+        while(val){
+            val = val >> 1;
+            if(freq.count(val) && freq[val] <= k){
+                if(cost.count(val))
+                    cost[val] += j;
+                else
+                    cost[val] = j;
+                ++freq[val];
+            }
+            else if(freq.count(val) == 0)
+            {
+                if(cost.count(val))
+                    cost[val] += j;
+                else
+                    cost[val] = j;
+                freq[val] = 1;
+            }
+            if(freq.count(val) && freq[val] >= k)
+                costa = min(costa,cost[val]);
+            ++j;
+        }
+    }
+    cout << costa << endl;
+    return 0;
+}
