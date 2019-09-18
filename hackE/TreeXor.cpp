@@ -1,45 +1,34 @@
-/**
-* I'm sorry I was an Idiot
-*/
 #include<iostream>
 #include<vector>
-#define ll long long
+#define min(x,y)(x < y?x:y)
+#define max(x,y)(x > y?x:y)
 
 using namespace std;
 
-struct node{
-	ll sons = 0;
-	ll dad = -1;
-};
+vector<int> mark(100001,-1);
+int k;
+
+void dfs(int s, int c,vector<vector<int>> &graph){
+	mark[s] = c;
+	int next = c;
+	if(graph[s].size() >= k)
+		next = next ^ s;
+	for(int i = 0; i < graph[s].size();++i){
+		dfs(graph[s][i],next,graph);
+	}
+}
 
 int main(){
-	ll N,K;
-	cin >> N >> K;
-	vector<node> vals(N);
-	for(int i = 0;i < N-1;++i){
-		ll val1,val2;
-		cin >> val1 >> val2;
-		if(val1 > val2){
-			ll temp = val1;
-			val1 = val2;
-			val2 = temp;
-		}
-		--val1;
-		--val2;
-		++vals[val1].sons;
-		vals[val2].dad = val1;
+	int n;
+	scanf(" %d %d",&n,&k);
+	vector<vector<int>> graph(n+1);
+	for(int i = 0; i < n-1;++i){
+		int a,b;
+		scanf(" %d %d",&a,&b);
+		graph[min(a,b)].push_back(max(a,b));
 	}
-	for(int i = 0; i <N;++i){
-		ll dad = vals[i].dad;
-		ll ans = 0;
-		while(dad != -1){
-		//	cout << "dad is: " << dad << "dad's sons " << vals[dad].sons <<endl;
-			if(vals[dad].sons >= K){
-				ans = ans ^ (dad+ 1);
-			}
-			dad = vals[dad].dad;
-		}
-		cout << ans << endl;
-	}
+	dfs(1,0,graph);
+	for(int i = 1;i <= n;++i)
+		printf("%d\n", mark[i]);
 	return 0;
 }
