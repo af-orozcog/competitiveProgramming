@@ -1,67 +1,68 @@
+//ALL I DO IS WRONG
 #include<iostream>
-#include<cstring>
-#define min(x,y)(x < y? x:y)
+#include<string.h>
 #define ll long long
+#define max(x,y)(x > y? x:y)
+#define M 998244353
 
 using namespace std;
 
-ll M = 998244353;
 
-ll dp[201][100000];
+ll dp[2][201][100001];
 int N;
 int ar[100000];
 
-int mn(int p,int m){
-	int co;
-	if(p - 1 < 0)
-		co = ar[p+1];
-	if(p + 1 >= N){
-		co = ar[p-1];
-		if(co == 0)
-			co = m;
-	}
-	else
-		co = min(ar[p-1],ar[p+1]);
-	return co;
-}
-
-
-ll solve(int m, int p){
-	if(p == N)
+ll solve(int f,int l,int p){
+	if(p == N && f == 0)
 		return 1;
-	if(dp[m][p] != -1)
-		return dp[m][p];
-	ll ans = 0;
-	int co = mn(p,m);
-	if(co > m)
+	if(p == N)
 		return 0;
-	bool le = true;
-	if(m > ar[p])
-		le = false; 
-	if(ar[p] != 0){
-		if(ar[p] < co)
+	if(ar[p] != -1){
+		if(f && ar[p] < l)
 			return 0;
-		else{
-			ans += solve((le?200:ar[p]),p+1) %M;
+		ll ans = 0;
+		if(ar[p] == l)
+		    ans += solve(0,ar[p],p+1);
+		ans += solve(1,ar[p],p+1);
+		ans = ans % M;
+		return dp[f][l][p] = ans;
+	}
+	if(dp[f][l][p] != -1)
+		return dp[f][l][p];
+	ll ans = 0;
+	if(f == 0){
+		for(int i = 1; i <= 200;++i){
+			if(l < i)
+				ans += solve(0,i,p+1);
+			else
+				ans += solve(1,i,p+1);
+			ans = ans%M;
 		}
 	}
-	if(ar[p] == 0){
-		for(int i = co;i <= m;++i){
-			if(i == 0)
-				continue;
-			ans += solve(i,p+1) % M;
+	else{
+		for(int i = l;i <= 200;++i){
+			if(l == i)
+				ans += solve(0,i,p+1);
+			else
+				ans += solve(1,i,p+1);
+			ans = ans%M;
 		}
 	}
-	return dp[m][p] = ans;
+	return dp[f][l][p] = ans;
 }
 
 int main(){
 	memset(dp,-1,sizeof(dp));
-	cin >> N;
-	for(int i = 0; i < N;++i){
-		cin >> ar[i];
-		if(ar[i] == -1)
-			ar[i] = 0;
+	scanf(" %d",&N);
+	for(int i = 0; i < N;++i) scanf(" %d",&ar[i]);
+	ll ans = 0;
+	if(ar[0] == -1){
+		for(int i = 1; i <= 200; ++i){
+			ans += solve(1,i,1);
+			ans = ans%M;
+		}
 	}
-	cout << solve(200,0) << endl;
+	else
+		ans = solve(1,ar[0],1);
+	cout << ans << endl;
 }

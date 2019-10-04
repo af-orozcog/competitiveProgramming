@@ -5,8 +5,8 @@ using namespace std;
 
 ll solution(int n){
 	if(n == 2)
-		return (ll)2;
-	return solution(n-2)<<1;
+		return 2;
+	return 2*solution(n-2);
 }
 
 
