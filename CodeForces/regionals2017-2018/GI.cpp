@@ -23,30 +23,23 @@ ll dfs(int w, int p){
             ans += (dfs(1,graph[p][0])*dfs(1,graph[p][1]))%M;
     }
     else{
-        set<pair<int,int>> over;
         ll val1 = dfs(0,graph[p][0]);
-        ll val2 = dfs(0,graph[p][0]);
-        if(val1 > 0 || val2 > 0){
-            int a = (val1 < 0? 1:0), b = (val2 < 0?1:0);
-            //if(!over.count({a,b}))
-                ans += (abs(val1)*abs(val2))%M;
-            //over.insert({a,b});
-        }
+        ll val2 = dfs(0,graph[p][1]);
+        if(val1 < 0 || val2 < 0)
+            cout << val1 << " " << val2 <<" who: " << p<<"1\n";
+        if(val1 > 0 || val2 > 0)
+            ans += (abs(val1)*abs(val2))%M;
         val2 = dfs(1,graph[p][1]);
-        if(!(val1 <= 0 && val2 >= 0)){
-            int a = (val1 < 0? 1:0), b = (val2 < 0? 0:1);
-            //if(!over.count({a,b}))
-                ans += (abs(val1)*abs(val2))%M;
-            //over.insert({a,b});
-        }
+        if(val1 < 0 || val2 < 0)
+            cout << val1 << " " << val2 <<" who: " << p<<"2\n";
+        if(!(val1 <= 0 && val2 >= 0))
+            ans += (abs(val1)*abs(val2))%M;
         val1 = dfs(1,graph[p][0]);
-        val2 = dfs(0,graph[p][0]);
-        if(!(val2 <= 0 && val1>= 0)){
-            //int a = (val1 < 0? 0:1),b = (val2 < 0?1:0);
-            //if(!over.count({a,b}))
-                ans += (abs(val1)*abs(val2))%M;
-            //over.insert({a,b});
-        }
+        val2 = dfs(0,graph[p][1]);
+        if(val1 < 0 || val2 < 0)
+            cout << val1 << " " << val2 <<" who: " << p<<"3\n";
+        if(!(val2 <= 0 && val1>= 0))
+            ans += (abs(val1)*abs(val2))%M;
     }
     if(info[p] != -1 && info[p] != w)
         ans = -ans;
@@ -67,19 +60,21 @@ int main(){
         else {graph[i].push_back(n+tot);++tot;}
         info[i] = c;
     }
-    //ll va = dfs(0,0);
-    //if(va <= 0) va = 0;
-    ll va = dfs(1,0);
-    cout << va << endl;
-    //if(temp < 0) temp = 0;
-//    va += temp;
+    ll va = dfs(0,0);
     cout << va << "\n";
+    if(va <= 0) va = 0;
+    ll temp = dfs(1,0);
+    cout << temp << endl;
+    if(temp < 0) temp = 0;
+    va += temp;
+    //cout << va << "\n";
     ll wut = 1;
     for(int i = 0; i < tot;++i){
         wut <<= 1;
         wut = wut % M;
     }
     ll ans = wut - va;
+
     if(ans < 0) ans+= M;
     printf("%lld\n",ans);
     return 0;

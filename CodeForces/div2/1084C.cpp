@@ -1,33 +1,28 @@
-#include<iostream>
-#include<string>
+#include<bits/stdc++.h>
 #define ll long long
-#define M 1000000007
-
 using namespace std;
 
+ll M = 1000000007;
+
+
 int main(){
-	ll ans = 0;
-	ll dp = 0;
-	string re;
-	cin >> re;
-	ll cum = 0;
-	for(int i = 0; i < re.size();++i){
-		if(re[i] == 'b'){
-			ans += cum;
-			ans = ans %M;
-			ans += dp * cum;
-			ans = ans % M;
-			dp+= cum;
-			cum = 0;
-		}
-		else if(re[i] == 'a')
-			++cum;
-	}
-	ans += cum;
-	ans = ans %M;
-	ans += dp * cum;
-    ans = ans % M;
-	dp+= cum;
-	cout << ans << endl;
-	return 0;
+    string re;
+    cin >> re;
+    ll lastB = re.size();
+    ll acum = 0;
+    ll ans = 0;
+    for(int i = re.size()-1;i > -1;--i){
+        if(re[i] == 'b'){
+            acum += (ll)lastB - (ll)i - (ll)1;
+            lastB = i;
+        }
+        else if(re[i] == 'a'){
+            ++ans;
+            if(lastB != (int)re.size())
+                ans += acum;
+        }
+        ans = ans % M;
+    }
+    printf("%lld\n",ans);
+    return 0;
 }

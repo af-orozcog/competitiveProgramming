@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+#define ll long long
+using namespace std;
+typedef pair<ll,ll> pi;
+
+int main(){
+    int t;
+    scanf(" %d",&t);
+    while(t--){
+        int n,k;
+        scanf(" %d %d",&n,&k);
+        int highest = -1;
+        int co = n;
+        while(co){
+            ++highest;
+            co = co >>1;
+        }
+
+    }
+}

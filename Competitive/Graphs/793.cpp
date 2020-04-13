@@ -1,6 +1,3 @@
-/**
-* Lo hago por Valentina, para ser mejor y para llegar a Moscú
-*/
 #include<iostream>
 #include<string>
 #include<vector>
