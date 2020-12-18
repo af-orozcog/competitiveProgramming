@@ -2,16 +2,17 @@
 #define ll long long
 using namespace std;
 
-ll gcd_extended(ll a, ll b, ll &x, ll &y){
-    if(b == 0){
-        x = 1, y = 0;
+ll gcd(int a, int b, ll& x, ll& y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
         return a;
     }
-    ll x1,y1;
-    ll g = gcd_extended(b,a%b,x1,y1);
+    ll x1, y1;
+    ll d = gcd(b, a % b, x1, y1);
     x = y1;
-    y1 = x1 - (a/b)*y1;
-    return g;
+    y = x1 - y1 * (a / b);
+    return d;
 }
 
 
@@ -23,12 +24,15 @@ void changeXY(ll a, ll b, ll &x, ll &y, ll cnt){
 
 bool any_solution(ll a, ll b, ll c){
     ll x,y;
-    ll g = gcd_extended(a,b,x,y);
+    ll g = gcd(a,b,x,y);
     if(c % g)
         return 0;
+    x *= c/g;
+    y *= c/g;
     a /= g;
     b /= g;
     changeXY(a,b,x,y,(-x)/b);
+    if(x < 0) changeXY(a,b,x,y,1);
     return x >= 0 && y >= 0;
 }
 
