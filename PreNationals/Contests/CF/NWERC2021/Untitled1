@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef pair<int,int> pi;
+
+void getAns(int x1,int x2, int y1, int y2){
+    bool keep = 0;
+    if((x2-x1+1)%2 == 1){
+        if((y2-y1+1)%2 == 1){
+
+        }
+        else{
+        }
+    }
+    else if((y2-y1+1)%2 == 1){
+
+    }
+    if(keep){
+
+    }
+}
+
+int main(){
+
+}
